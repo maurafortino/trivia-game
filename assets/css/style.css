@@ -1,0 +1,12 @@
+body{
+    background-image: url('../images/background.jpg');
+    background-size: 100%;
+}
+
+.container{
+    background-color: rgba(225, 225, 225, .8)
+}
+
+input{
+    margin-right: 20px;
+}
