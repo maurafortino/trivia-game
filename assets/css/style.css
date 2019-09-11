@@ -3,13 +3,11 @@ body{
     background-size: 100%;
 }
 
-
-
 input{
     margin-right: 20px;
 }
 
-#start-container, #end-container{
+#start-container, #end-container, #timer{
     background-color: white;
     height: 250px;
     width: 600px;
@@ -32,22 +30,32 @@ input{
 
 p{
     margin: 0;
-    background-color: rgb(50, 124, 147);
     border: black solid 1px;
 }
+.question-one, .question-five{
+    background-color: rgb(143, 60, 24);
+}
 
+.question-two, .question-six{
+    background-color: rgb(55, 10 ,13);
+}
+
+.question-three, .question-seven{
+    background-color: rgb(78, 102, 159);
+}
+
+.question-four, .question-eight{
+    background-color: rgb(36, 77, 33);
+}
 p:hover{
     background-color: rgba(50, 124, 147, .8);
     font-weight: bold;
 }
 
 h4{
-    background-color: rgb(191, 83,37);
+    background-color: rgb(138, 173, 81);
     margin: 0;
 }
 
-.add-color{
-    background-color: darkblue;
-}
 
 
