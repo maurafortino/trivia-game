@@ -51,34 +51,51 @@ var wrongGuesses = [];
 var startContainer = document.getElementById("start-container");
 var gameContainer = $("#game-container");
 var endContainer = $("#end-container");
-// var currentTriviaIndex = 0;
+var currentTriviaIndex = 0;
 
-function timeConverter(t) {
-    var minutes = Math.floor(t / 60);
-    var seconds = t - (minutes * 60);
+function addQuestion() {
+    var questionDiv = $("<div>")
+    questionDiv.addClass("question")
+    questionDiv.text(trivia[currentTriviaIndex].question);
+    gameContainer.html(questionDiv);
+}
 
-    if (seconds < 10) {
-        seconds = "0" + seconds;
+function addOptions() {
+    for (var j = 0; j < trivia[currentTriviaIndex].options.length; j++) {
+        var optionsPar = $("<p>");
+        optionsPar.text(trivia[currentTriviaIndex].options[j]);
+        // optionsPar.val(trivia[currentTriviaIndex].options[j]);
+        optionsPar.attr("data-answer", trivia[currentTriviaIndex].options[j]);
+        optionsPar.addClass("trivia");
+        gameContainer.append(optionsPar);
+    };
+};
+
+function nextQuestion() {
+    clearInterval(timer);
+    clock = 10;
+    timer = setInterval(subtract, 1000);
+
+    var isGameOver = trivia.length - 1;
+    if (isGameOver === currentTriviaIndex) {
+        submit();
+    } else {
+        currentTriviaIndex++;
+        addQuestion();
+        addOptions();
     }
+};
 
-    if (minutes === 0) {
-        minutes = "00";
-    }
-
-    else if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-
-    return minutes + ":" + seconds;
+function timesUp(){
+    clearInterval(timer);
 };
 
 function subtract() {
-    clock--
-    var setTime = timeConverter(clock);
-    $("#display").html(setTime)
-    if(clock === 0){
-        stopClock();
-        submit();
+    clock--;
+    $("#display").html(clock)
+    if (clock === 0) {
+        timesUp();
+        nextQuestion();
     }
 };
 
@@ -94,46 +111,29 @@ function enterGame() {
     wrongGuesses = [];
     correctGuesses = [];
     userGuesses = [];
+    currentTriviaIndex = 0;
     startContainer.style.display = "none";
     gameContainer.css("display", "block");
     endContainer.css("display", "none");
+    addQuestion();
+    addOptions();
 
-    for (var i = 0; i < trivia.length; i++) {
-        var newDiv = $("<div>");
-        var questionHeader = $("<h4>");
-        isAnswerChosen = false;
-        questionHeader.text(trivia[i].question);
-        newDiv.append(questionHeader);
-        for (var j = 0; j < trivia[i].options.length; j++) {
-            var optionsPar = $("<p>");
-            optionsPar.text(trivia[i].options[j]);
-            optionsPar.addClass(trivia[i].className);
-            optionsPar.attr("onclick", "addAnswer(this.textContent)");
-            newDiv.addClass("trivia-div");
-            newDiv.append(optionsPar);
-            newDiv.css("margin-bottom", "10px");
-        };
-        gameContainer.append(newDiv);
-    };
-    var submitButton = $("<button>");
-    submitButton.text("submit");
-    submitButton.attr("onclick", "submit()");
-    gameContainer.append(submitButton);
-    
-    clock = 120;
+    clock = 10;
     timer = setInterval(subtract, 1000);
 
 };
 
-function addAnswer(parameter) {
 
-    if (gameAnswers.includes(parameter)) {
-        correctGuesses.push(parameter);
+$(document).on("click", ".trivia", function () {
+    var userAnswer = $(this).attr("data-answer");
+    if (gameAnswers.includes(userAnswer)) {
+        correctGuesses.push(userAnswer);
     } else {
-        wrongGuesses.push(parameter);
+        wrongGuesses.push(userAnswer)
     }
+    nextQuestion();
+});
 
-};
 
 function submit() {
     stopClock();
@@ -141,6 +141,7 @@ function submit() {
     gameContainer.css("display", "none");
     endContainer.css("display", "block");
     var newDiv = $("<div>");
+    newDiv.addClass("scores")
     newDiv.html("<p>Correct Guesses: " + correctGuesses.length + "</p>"
         + "<p> Wrong Guesses: " + wrongGuesses.length + "</p>");
     endContainer.append(newDiv);
@@ -157,12 +158,14 @@ function submit() {
     if (correctGuesses.length > wrongGuesses.length) {
         $("#game-over-text").text("Welcome to Team Avatar! We're happy to have you!")
         var winButton = $("<button>").text("Play again?");
+        winButton.addClass("end-game-button")
         winButton.attr("onclick", "enterGame()");
         newDiv.append(winButton)
 
     } else {
         $("#game-over-text").text("You're going to need a redemtion arc greater than Zuko's if you think you'll ever be on Team Avatar.")
         var loseButton = $("<button>").text("Redeem Yourself?");
+        loseButton.addClass("end-game-button");
         loseButton.attr("onclick", "enterGame()");
         newDiv.append(loseButton)
     }

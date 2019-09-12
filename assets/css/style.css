@@ -7,8 +7,11 @@ input{
     margin-right: 20px;
 }
 
+#start-container{
+    background-color:rgb(255, 165, 0);
+}
+
 #start-container, #end-container, #timer{
-    background-color: white;
     height: 250px;
     width: 600px;
     text-align: center;
@@ -24,8 +27,9 @@ input{
 }
 
 #timer{
-    background-color: rgb(88, 124, 169);
+    background-color: rgb(245, 208, 51);
     height: 100px;
+    font-size: 4rem;
 }
 
 p{
@@ -47,15 +51,50 @@ p{
 .question-four, .question-eight{
     background-color: rgb(36, 77, 33);
 }
-p:hover{
+/* p:hover{
     background-color: rgba(50, 124, 147, .8);
     font-weight: bold;
-}
+} */
 
 h4{
-    background-color: rgb(138, 173, 81);
     margin: 0;
 }
 
+h5{
+    margin: 10px;
+}
 
+.directions{
+    border: none;
+    margin: 10px;
+}
 
+.directions:hover{
+    font-weight: normal;
+}
+
+button{
+    border: none;
+    background-color: rgba(225, 225, 225, .8);
+    width: 90%;
+}
+
+.trivia{
+    background-color: rgb(13, 28, 71);
+    color: rgba(125, 177, 238);
+}
+
+.question{
+    background-color: rgba(125, 177, 238);
+    color: rgb(13, 28, 71);
+}
+
+.scores{
+    background-color: rgb(29, 67, 24);
+    color: white;
+}
+
+.end-game-button{
+    background-color: rgb(29, 67, 24);
+    color: white;
+}
