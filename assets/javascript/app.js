@@ -64,7 +64,6 @@ function addOptions() {
     for (var j = 0; j < trivia[currentTriviaIndex].options.length; j++) {
         var optionsPar = $("<p>");
         optionsPar.text(trivia[currentTriviaIndex].options[j]);
-        // optionsPar.val(trivia[currentTriviaIndex].options[j]);
         optionsPar.attr("data-answer", trivia[currentTriviaIndex].options[j]);
         optionsPar.addClass("trivia");
         gameContainer.append(optionsPar);
